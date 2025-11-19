@@ -1,8 +1,11 @@
 // pages/index.js
+import NavBar from '../components/NavBar';
 
 export default function HomePage() {
   return (
     <>
+      <NavBar />
+
       <main className="home-page">
         <div className="home-overlay">
           <div className="hero-content">
@@ -24,18 +27,26 @@ export default function HomePage() {
           </div>
 
           <section className="info-sections">
-            <div className="info-card">
-              <h2>Bookings</h2>
-              <p>Speakers, DJs, and healers for live and virtual events.</p>
-            </div>
-            <div className="info-card">
-              <h2>Health</h2>
-              <p>Resources around Diabetes, Lupus, Cancer, and wellbeing.</p>
-            </div>
-            <div className="info-card">
-              <h2>Store</h2>
-              <p>Digital content, PDFs, audio, and more.</p>
-            </div>
+            <a href="/bookings" className="info-card-link">
+              <div className="info-card">
+                <h2>Bookings</h2>
+                <p>Speakers, DJs, and healers for live and virtual events.</p>
+              </div>
+            </a>
+
+            <a href="/health" className="info-card-link">
+              <div className="info-card">
+                <h2>Health</h2>
+                <p>Resources around Diabetes, Lupus, Cancer, and wellbeing.</p>
+              </div>
+            </a>
+
+            <a href="/store" className="info-card-link">
+              <div className="info-card">
+                <h2>Store</h2>
+                <p>Digital content, PDFs, audio, and more.</p>
+              </div>
+            </a>
           </section>
         </div>
       </main>
@@ -58,10 +69,10 @@ export default function HomePage() {
           flex: 1;
           background: linear-gradient(
             to bottom,
-            rgba(0, 0, 0, 0.7),
-            rgba(0, 0, 0, 0.9)
+            rgba(0, 0, 0, 0.9),
+            rgba(0, 0, 0, 0.95)
           );
-          padding: 3rem 1.5rem 2rem;
+          padding: 4.5rem 1.5rem 2rem; /* top padding so content clears nav */
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -112,7 +123,7 @@ export default function HomePage() {
         }
 
         .btn.primary {
-          background: #d4af37; /* gold */
+          background: #d4af37;
           color: #000000;
         }
 
@@ -138,11 +149,17 @@ export default function HomePage() {
           margin: 0 auto;
         }
 
+        .info-card-link {
+          text-decoration: none;
+          color: inherit;
+        }
+
         .info-card {
           background: rgba(0, 0, 0, 0.7);
           border-radius: 0.75rem;
           padding: 1.2rem;
           border: 1px solid rgba(212, 175, 55, 0.4);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .info-card h2 {
@@ -154,6 +171,11 @@ export default function HomePage() {
         .info-card p {
           font-size: 0.95rem;
           margin: 0;
+        }
+
+        .info-card-link:hover .info-card {
+          transform: translateY(-3px);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
         @keyframes homeHeroPan {
@@ -173,7 +195,7 @@ export default function HomePage() {
 
         @media (max-width: 600px) {
           .home-overlay {
-            padding: 2rem 1.25rem 1.5rem;
+            padding: 4.5rem 1.25rem 1.5rem;
           }
 
           .hero-content {
