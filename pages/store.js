@@ -31,7 +31,7 @@ export default function StorePage() {
           background-size: 110%;
           background-position: center top;
           background-repeat: no-repeat;
-          animation: storeHeroPan 30s ease-in-out infinite alternate;
+          animation: storeHeroPan 20s ease-in-out infinite alternate;
         }
 
         .store-overlay {
