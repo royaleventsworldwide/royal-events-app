@@ -1,8 +1,11 @@
 // pages/store.js
+import NavBar from '../components/NavBar';
 
 export default function StorePage() {
   return (
     <>
+      <NavBar />
+
       <main className="store-page">
         <div className="store-overlay">
           <div className="store-content">
@@ -31,17 +34,17 @@ export default function StorePage() {
           background-size: 110%;
           background-position: center top;
           background-repeat: no-repeat;
-          animation: storeHeroPan 20s ease-in-out infinite alternate;
+          animation: storeHeroPan 25s ease-in-out infinite alternate;
         }
 
         .store-overlay {
           width: 100%;
           height: 100%;
-          padding: 2rem;
+          padding: 4.5rem 2rem 2rem; /* top padding for nav */
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(0, 0, 0, 0.55); /* dark overlay on top of image */
+          background: rgba(0, 0, 0, 0.65);
         }
 
         .store-content h1 {
@@ -67,6 +70,10 @@ export default function StorePage() {
         @media (max-width: 768px) {
           .store-content h1 {
             font-size: 2rem;
+          }
+
+          .store-overlay {
+            padding: 4.5rem 1.5rem 2rem;
           }
         }
       `}</style>
