@@ -150,3 +150,77 @@
 .nav-links a:hover {
   color: #d4af37; /* gold */
 }
+/* GENERIC SECTION PAGES (Bookings, Health, etc.) */
+
+.section-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 4rem;
+  color: #f9f5e9;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Moving background – slow pan = fake video look */
+.section-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+  animation: hero-pan 22s ease-in-out infinite alternate;
+  z-index: -2;
+}
+
+/* Background image per page */
+.bookings-page::before {
+  background-image: url('/bookings-hero.jpg');
+}
+
+.health-page::before {
+  background-image: url('/health-hero.jpg');
+}
+
+/* Dark overlay so text is readable */
+.section-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.9)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9));
+  z-index: -1;
+}
+
+.section-content {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.section-content h1 {
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.section-content p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+/* Slow pan animation */
+@keyframes hero-pan {
+  from {
+    transform: scale(1.05) translateX(-8px);
+  }
+  to {
+    transform: scale(1.05) translateX(8px);
+  }
+}
