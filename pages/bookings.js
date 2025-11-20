@@ -1,4 +1,5 @@
 // pages/bookings.js
+import "../styles/globals.css";          // ⬅️ force global styles to load
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 
@@ -25,7 +26,7 @@ export default function BookingsPage() {
             and your guests feel taken care of from start to finish.
           </p>
 
-          <div className="section-actions">
+        <div className="section-actions">
             <a href="#booking-form" className="primary-btn">
               Request a Booking
             </a>
