@@ -1,3 +1,4 @@
+// pages/bookings.js
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 
@@ -14,7 +15,7 @@ export default function BookingsPage() {
 
       <NavBar />
 
-      {/* This class name MUST match your CSS: .section-page and .bookings-page::before */}
+      {/* Wrapper for animated background + section styling */}
       <main className="section-page bookings-page">
         <div className="section-content">
           <h1>Book Your Royal Experience</h1>
@@ -29,7 +30,7 @@ export default function BookingsPage() {
               Request a Booking
             </a>
             <a href="/health" className="secondary-btn">
-              View Health & Wellness Options
+              View Health &amp; Wellness Options
             </a>
           </div>
 
