@@ -1,4 +1,5 @@
 // pages/health.js
+import "../styles/globals.css";          // ⬅️ force global styles to load
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 
