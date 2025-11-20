@@ -1,3 +1,4 @@
+// pages/health.js
 import Head from "next/head";
 import NavBar from "../components/NavBar";
 
@@ -5,7 +6,7 @@ export default function HealthPage() {
   return (
     <>
       <Head>
-        <title>Health & Wellness | Royal Events Worldwide</title>
+        <title>Health &amp; Wellness | Royal Events Worldwide</title>
         <meta
           name="description"
           content="Luxury wellness, self-care and speaker experiences designed to keep your mind, body and spirit in royal condition."
@@ -14,10 +15,10 @@ export default function HealthPage() {
 
       <NavBar />
 
-      {/* This class name MUST match your CSS: .section-page and .health-page::before */}
+      {/* Wrapper for animated background + section styling */}
       <main className="section-page health-page">
         <div className="section-content">
-          <h1>Royal Health & Wellness</h1>
+          <h1>Royal Health &amp; Wellness</h1>
           <p>
             Before the lights, cameras and crowds — your health comes first.
             Royal Events Worldwide promotes high-class, healthy living so you
@@ -61,4 +62,3 @@ export default function HealthPage() {
     </>
   );
 }
-
