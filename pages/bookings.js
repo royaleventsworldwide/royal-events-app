@@ -1,8 +1,70 @@
 // pages/bookings.js
+import { useState } from "react";
 import Head from "next/head";
 import NavBar from "../components/NavBar";
+import { supabase } from "../lib/supabase";
 
 export default function BookingsPage() {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    eventCity: "",
+    eventDate: "",
+    estimatedBudget: "",
+    message: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+
+    try {
+      const { data, error } = await supabase
+        .from("bookings")
+        .insert([
+          {
+            full_name: formData.fullName,
+            email: formData.email,
+            phone: formData.phone || null,
+            event_city: formData.eventCity || null,
+            event_date: formData.eventDate || null,
+            estimated_budget: formData.estimatedBudget || null,
+            message: formData.message || null
+          }
+        ]);
+
+      if (error) throw error;
+
+      setSuccess(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        eventCity: "",
+        eventDate: "",
+        estimatedBudget: "",
+        message: ""
+      });
+    } catch (err) {
+      setError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -22,7 +84,6 @@ export default function BookingsPage() {
         padding: '80px 20px 40px',
         position: 'relative'
       }}>
-        {/* Animated background overlay */}
         <div style={{
           position: 'absolute',
           top: 0,
@@ -121,11 +182,36 @@ export default function BookingsPage() {
               marginBottom: '30px',
               color: 'rgba(255, 255, 255, 0.8)'
             }}>
-              Share a few details and someone from the Royal Events team will
-              follow up.
+              Share a few details and someone from the Royal Events team will follow up.
             </p>
 
-            <form>
+            {success && (
+              <div style={{
+                padding: '15px',
+                background: 'rgba(0, 255, 0, 0.1)',
+                border: '1px solid rgba(0, 255, 0, 0.3)',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                color: '#00ff00'
+              }}>
+                ✅ Thank you! Your booking request has been submitted successfully. We'll be in touch soon!
+              </div>
+            )}
+
+            {error && (
+              <div style={{
+                padding: '15px',
+                background: 'rgba(255, 0, 0, 0.1)',
+                border: '1px solid rgba(255, 0, 0, 0.3)',
+                borderRadius: '10px',
+                marginBottom: '20px',
+                color: '#ff6b6b'
+              }}>
+                ❌ {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -134,7 +220,11 @@ export default function BookingsPage() {
               }}>
                 <input 
                   type="text" 
-                  placeholder="Full Name" 
+                  name="fullName"
+                  placeholder="Full Name *" 
+                  required
+                  value={formData.fullName}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -146,7 +236,11 @@ export default function BookingsPage() {
                 />
                 <input 
                   type="email" 
-                  placeholder="Email" 
+                  name="email"
+                  placeholder="Email *" 
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -166,7 +260,10 @@ export default function BookingsPage() {
               }}>
                 <input 
                   type="text" 
+                  name="phone"
                   placeholder="Phone (optional)" 
+                  value={formData.phone}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -178,7 +275,10 @@ export default function BookingsPage() {
                 />
                 <input 
                   type="text" 
+                  name="eventCity"
                   placeholder="Event City" 
+                  value={formData.eventCity}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -198,7 +298,10 @@ export default function BookingsPage() {
               }}>
                 <input 
                   type="date" 
+                  name="eventDate"
                   placeholder="Event Date" 
+                  value={formData.eventDate}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -210,7 +313,10 @@ export default function BookingsPage() {
                 />
                 <input 
                   type="text" 
+                  name="estimatedBudget"
                   placeholder="Estimated Budget" 
+                  value={formData.estimatedBudget}
+                  onChange={handleChange}
                   style={{
                     padding: '15px',
                     borderRadius: '10px',
@@ -223,8 +329,11 @@ export default function BookingsPage() {
               </div>
 
               <textarea
+                name="message"
                 rows={4}
                 placeholder="Tell us about the event and what you need (speaker, host, wellness activation, etc.)"
+                value={formData.message}
+                onChange={handleChange}
                 style={{
                   width: '100%',
                   padding: '15px',
@@ -239,24 +348,25 @@ export default function BookingsPage() {
               />
 
               <button 
-                type="submit" 
+                type="submit"
+                disabled={loading}
                 style={{
                   width: '100%',
                   padding: '15px 40px',
-                  background: 'linear-gradient(135deg, #ffd700, #ffed4e)',
+                  background: loading ? 'rgba(255, 215, 0, 0.5)' : 'linear-gradient(135deg, #ffd700, #ffed4e)',
                   color: '#1a1a2e',
                   border: 'none',
                   borderRadius: '50px',
                   fontWeight: 'bold',
                   fontSize: '1.1rem',
-                  cursor: 'pointer',
+                  cursor: loading ? 'not-allowed' : 'pointer',
                   transition: 'transform 0.3s ease',
                   boxShadow: '0 4px 15px rgba(255, 215, 0, 0.3)'
                 }}
-                onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
+                onMouseOver={(e) => !loading && (e.target.style.transform = 'scale(1.05)')}
                 onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
               >
-                Submit Request
+                {loading ? 'Submitting...' : 'Submit Request'}
               </button>
             </form>
           </div>
